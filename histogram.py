@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 classes = ["Arithmancy", "Astronomy", "Herbology", "Defense Against the Dark Arts", "Divination", "Muggle Studies", "Ancient Runes", "History of Magic", "Transfiguration", "Potions", "Care of Magical Creatures", "Charms", "Flying"]
 
 def load_dataset():
-    df = pd.read_csv("datasets/dataset_train.csv")
+    df = pd.read_csv("datasets/dataset_train.csv", index_col="Index")
     return df
 
 def show_histogram(df):
@@ -15,15 +15,13 @@ def show_histogram(df):
     Gryffindor_df = df[df["Hogwarts House"] == "Gryffindor"]
     Hufflepuff_df = df[df["Hogwarts House"] == "Hufflepuff"]
     df = df[classes]
-    for feature in df:
-        plt.title(feature)
-        plt.hist(Ravenclaw_df[feature].to_numpy(), bins=20, label="Ravenclaw", alpha=0.5)
-        plt.hist(Slytherin_df[feature].to_numpy(), bins=20, label="Slytherin", alpha=0.5)
-        plt.hist(Gryffindor_df[feature].to_numpy(), bins=20, label="Gryffindor", alpha=0.5)
-        plt.hist(Hufflepuff_df[feature].to_numpy(), bins=20, label="Hufflepuff", alpha=0.5) 
-        plt.legend()
-        plt.show()
-    pass
+    plt.title("Arithmancy")
+    plt.hist(Ravenclaw_df["Arithmancy"].to_numpy(), bins=20, label="Ravenclaw", alpha=0.5)
+    plt.hist(Slytherin_df["Arithmancy"].to_numpy(), bins=20, label="Slytherin", alpha=0.5)
+    plt.hist(Gryffindor_df["Arithmancy"].to_numpy(), bins=20, label="Gryffindor", alpha=0.5)
+    plt.hist(Hufflepuff_df["Arithmancy"].to_numpy(), bins=20, label="Hufflepuff", alpha=0.5) 
+    plt.legend()
+    plt.show()
 
 def main():
     try:
