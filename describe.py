@@ -24,7 +24,6 @@ def describe_feature(datas):
     return infos
 
 def describe_df(df):
-    print(df.describe())
     described = pd.DataFrame(index=pd.Index(["Count", "Mean", "Std", "Min", "25%", "50%", "75%", "Max"]))
     for feature in df:
         if not is_numeric_dtype(df[feature]) or df[feature].isnull().values.all():
