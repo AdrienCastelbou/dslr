@@ -7,7 +7,7 @@ from TinyStatistician import TinyStatistician as TS
 def load_dataset():
     if len(sys.argv) != 2:
         raise Exception("Error : Wrong number of arguments -> Usage : python3 describe.py path/to/dataset.csv")
-    df = pd.read_csv(sys.argv[1])
+    df = pd.read_csv(sys.argv[1], index_col="Index")
     return df
 
 def describe_feature(datas):
