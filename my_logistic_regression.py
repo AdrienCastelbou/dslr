@@ -2,24 +2,10 @@ import numpy as np
 import random
 import sys
 
-def arg_checker(fnc):
-    def ckeck_args(*args, **kwargs):
-        try:
-            for arg in args:
-                if type(arg) == MyLogisticRegression:
-                    if type(arg.alpha) != float or type(arg.max_iter) != int or not isinstance(arg.lambda_, (float, int))\
-                        or (arg.penality != None and not arg.penality in arg.supported_penalties) or type(arg.theta) != np.ndarray:
-                        print("Bad params for your model")
-                        return None
-                else:
-                    if type(arg) != np.ndarray:
-                        print(f"Bad param for {fnc.__name__}")
-                        return None
-            return fnc(*args, **kwargs)
-        except Exception as e:
-            print(e, file=sys.stderr)
-            return None
-    return ckeck_args
+def check_matrices(matrices):
+    for matrix in matrices:
+        if type(matrix) != np.ndarray:
+            raise Exception("Bad Type")
 
 
 class MyLogisticRegression:
@@ -42,6 +28,7 @@ class MyLogisticRegression:
 
     def l2(self):
         try:
+            check_matrices([self.theta])
             prime_theta = np.array(self.theta)
             prime_theta[0][0] = 0
             l2 = float(prime_theta.T.dot(prime_theta))
@@ -50,9 +37,10 @@ class MyLogisticRegression:
             print(e, file=sys.stderr)
             return None
 
-    #@arg_checker
+
     def gradient(self, x, y, method="GD"):
         try:
+            check_matrices([x, y, self.theta])
             if not method in self.supported_optimization_methods:
                 raise Exception("Error in gradient : Optimization Method not supported")
             if method == "SGD":
@@ -75,9 +63,9 @@ class MyLogisticRegression:
             print(e, file=sys.stderr)
             return None
 
-    #@arg_checker
     def fit_(self, x, y, method="GD"):
         try:
+            check_matrices([x, y, self.theta])
             if not method in self.supported_optimization_methods:
                 raise Exception("Error in fit_ : Optimization Method not supported")
             for i in range(self.max_iter):
@@ -88,9 +76,9 @@ class MyLogisticRegression:
             print(e, file=sys.stderr)
             return None
     
-    @arg_checker
     def predict_(self, x):
         try:
+            check_matrices([x])
             if not len(x) or not len(self.theta):
                 raise Exception("Error in predict_ : Bad parameters")
             extended_x = np.hstack((np.ones((x.shape[0], 1)), x))
@@ -99,9 +87,10 @@ class MyLogisticRegression:
             print(e, file=sys.stderr)
             return None
 
-    @arg_checker
+
     def loss_elem_(self, y, y_hat):
         try:
+            check_matrices([y, y_hat])
             if y.ndim == 1:
                 y = y.reshape(y.shape[0], -1)
             if y_hat.ndim == 1:
@@ -113,12 +102,12 @@ class MyLogisticRegression:
             print(e, file=sys.stderr)
             return None
     
-    @arg_checker
+
     def loss_(self, y, y_hat):
         try:
+            check_matrices([y, y_hat])
             if y.shape[1] != 1 or y.shape != y_hat.shape:
                 raise Exception("Error in loss_ : Wrong dimensions for parameters")
-            y_hat = y_hat
             l = len(y)
             v_ones = np.ones((l, 1))
             loss = - float(y.T.dot(np.log(y_hat + 1e-15)) + (v_ones - y).T.dot(np.log(1 - y_hat + 1e-15))) / l

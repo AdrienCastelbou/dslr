@@ -50,7 +50,7 @@ def train_classifier(x_train, y_train, reference):
     myLR = MyLogisticRegression(theta=np.random.rand(x_train.shape[1] + 1, 1).reshape(-1, 1), max_iter=5000)
     y_train = binarize(y_train, reference)
     print("start fitting")
-    myLR.fit_(x_train, y_train, "MBGD")
+    myLR.fit_(x_train, y_train)
     print("fiting done")
     return myLR
 
