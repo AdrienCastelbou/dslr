@@ -21,10 +21,11 @@ def describe_feature(datas):
     infos.append(TS.percentile(datas, 50))
     infos.append(TS.percentile(datas, 75))
     infos.append(np.max(datas))
+    infos.append(TS.var(datas))
     return infos
 
 def describe_df(df):
-    described = pd.DataFrame(index=pd.Index(["Count", "Mean", "Std", "Min", "25%", "50%", "75%", "Max"]))
+    described = pd.DataFrame(index=pd.Index(["Count", "Mean", "Std", "Min", "25%", "50%", "75%", "Max", "Var"]))
     for feature in df:
         if not is_numeric_dtype(df[feature]) or df[feature].isnull().values.all():
             continue
