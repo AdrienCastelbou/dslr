@@ -50,7 +50,7 @@ def train_classifier(x_train, y_train, reference):
     myLR = MyLogisticRegression(theta=np.random.rand(x_train.shape[1] + 1, 1).reshape(-1, 1), max_iter=5000)
     y_train = binarize(y_train, reference)
     print("start fitting")
-    myLR.fit_(x_train, y_train)
+    myLR.fit_(x_train, y_train, "MBGD")
     print("fiting done")
     return myLR
 
@@ -70,6 +70,7 @@ def perform_one_vs_all(df):
     model.append(train_classifier(x, y, GRYFFINDOR))
     model.append(train_classifier(x, y, HUFFLEPUFF))
     preds = perform_classification(model, x)
+    print(accuracy_score_(y, preds))
     return model
 
 
