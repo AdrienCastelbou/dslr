@@ -49,9 +49,9 @@ def binarize(x, reference):
 def train_classifier(x_train, y_train, reference):
     myLR = MyLogisticRegression(theta=np.random.rand(x_train.shape[1] + 1, 1).reshape(-1, 1), max_iter=5000)
     y_train = binarize(y_train, reference)
-    print("start fitting")
+    print(f"Train classifier {reference + 1}")
     myLR.fit_(x_train, y_train)
-    print("fiting done")
+    print("Done")
     return myLR
 
 

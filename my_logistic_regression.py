@@ -1,6 +1,8 @@
 import numpy as np
 import random
 import sys
+from utils import progressbar
+
 
 def check_matrices(matrices):
     for matrix in matrices:
@@ -68,7 +70,7 @@ class MyLogisticRegression:
             check_matrices([x, y, self.theta])
             if not method in self.supported_optimization_methods:
                 raise Exception("Error in fit_ : Optimization Method not supported")
-            for i in range(self.max_iter):
+            for i in progressbar(range(self.max_iter)):
                 nabla_J = self.gradient(x, y, method)
                 self.theta = self.theta - self.alpha * nabla_J
             return self.theta
