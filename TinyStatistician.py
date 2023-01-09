@@ -62,7 +62,9 @@ class TinyStatistician:
         try:
             l = len(x)
             sorted_x = sorted(x)
-            return sorted_x[int(np.ceil(p / 100 * l)) - 1]
+            r = p / 100 * (l- 1)
+            rr = r - np.floor(r)
+            return sorted_x[int(np.floor(r))] + rr * (sorted_x[int(np.ceil(r))] - sorted_x[int(np.floor(r))])
         except:
             return None
 

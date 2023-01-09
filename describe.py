@@ -41,7 +41,6 @@ def main():
         return
     describe_df(df)
     
-    
 
 if __name__ == "__main__":
     main()
